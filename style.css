@@ -1,0 +1,161 @@
+body {
+/*   font-family: "Open Sans", helvetica, arial, sans-serif; */
+  font-family: 'Crimson Text', serif;
+  margin: 10vw;
+  display: center;
+  text-align: center;
+/*   padding: 5px;  */
+}
+
+button {
+  color: #3217ff;
+  font-family: 'Amiri', serif;
+  
+}
+
+h2 {
+  color: red;
+}
+.body{
+  --hue: var(--hue-neutral);
+  padding:0;
+  margin:0;
+  display:flex;
+  width: 100vw;
+  height: 100vw;
+  justify-content: center;
+  align-items: center;
+  background-color:hsl((var --hue), 100%,20%);
+}
+
+.body.correct{
+  --hue :var(--hue-correct);
+}
+
+.body.wrong{
+  --hue :var(--hue-wrong);
+}
+
+.container{
+  width: 800px;
+  max-width: 80%;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 2px 0.5px;
+}
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2,auto);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.btn{
+  --hue: var(--hue-neutral);
+  border: 1px solid hsl(var(--hue), 100%, 30%);
+  background-color: hsl(var(--hue), 100%, 50%);
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: white;
+  outline: none;
+  cursor: pointer;
+
+}
+.btn:hover{
+  border-color:black;
+}
+
+.start-btn,
+.next-btn {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+.controls{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+/*
+.hide {
+  display: none;
+}*/
+
+
+.icon{
+    padding: 20px 10px;
+  }
+
+.social{
+  padding:10px;
+}
+
+.social: hover{
+  filter: grayscale(100%);
+}
+
+:root {
+  --hue-neutral :200;
+  --hue-wrong :0;
+  --hue-correct: 145;
+}
+
+/* Style the top navigation bar */
+.navbar {
+  overflow: hidden; /* Hide overflow */
+   flex: 30%; /* Set the width of the sidebar */
+/*   background-color: #f1f1f1; Grey background color */
+  padding: 20px; /* Some padding */
+/*   background-color: #333; /* Dark background color */
+  width:10%;
+  float:left;
+  position: fixed;
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  float:left;/* Make sure that the links stay side-by-side */
+  display: block; /* Change the display to block, for responsive reasons */
+  color: red; /* White text color */
+  text-align: center; /* Center the text */
+  padding: 10px 20px; /* Add some padding */
+  text-decoration: none; /* Remove underline */
+  flex:10%;
+  
+}
+
+.navbar a.current{
+   color:blue;
+   /*background:#f1d74c;
+}
+
+/* Right-aligned link */
+/* .navbar a.right {
+  float: right; /* Float a link to the right */
+/* }  */
+
+/* Change color on hover/mouse-over */
+.navbar a:hover {
+/*   background-color: blue;  */
+  color: blue; /* Black text color */
+}
+
+.right{
+  flex: 90%; /* Set the width of the main content */
+  background-color: white; /* White background color */
+  padding: 5px; /* Some padding */
+  float:right;
+  width:80%;
+/*   height:20%; */
+  overflow: auto;
+}
+
+.grid-container {
+  display: inline-grid;
+  display: grid;
+  grid-gap: 50px;
+
+}
