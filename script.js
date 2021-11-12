@@ -14,14 +14,24 @@ let quizScore = 0;
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () =>{
 	correctQuestionIndex++
-	setnextQuestion()
+	console.log(correctQuestionIndex)
+	if (correctQuestionIndex > (questions.length-1)){
+		// correctQuestionIndex = 0;
+		startButton.innerText = "Restart"
+		startButton.classList.remove('hide')
+		nextButton.classList.add('hide')
+	} // show reset button/reset game
+	else {
+		setnextQuestion()
+	}		
 })
 
 function startGame(){
 	startButton.classList.add('hide')
+	nextButton.classList.remove('hide')
 	shuffledQuestions=questions.sort(() => Math.random() - 0.5)
 	correctQuestionIndex=0;
-	questionContainerElement.classList.remove('hide')
+	questionContainerElement.classList.remove('hide') 
 	setnextQuestion()
 	quizScore=0
 }
@@ -33,9 +43,11 @@ function setnextQuestion(){
 }
 
 function showQuestion(question) {
-	questionElement.innerText = question.question;
+	questionElement.innerText = question.question; 
 	question.answers.forEach((answer) =>{
-		const button = document.createElement('button')
+		//loop through answers 
+    	
+		const button = document.createElement("button")
 		button.innerText=answer.text;
 		button.classList.add('btn')
 		if(answer.correct){
@@ -46,15 +58,13 @@ function showQuestion(question) {
 	})
 }
 
-
 function resetState(){
 	clearStatusClass(document.body)
-	nextButton.classList.add('hide')
+	// nextButton.classList.add('hide')
 	while(answerButtonsElement.firstChild) {
 		answerButtonsElement.removeChild(answerButtonsElement.firstChild)
 	}
 }
-
 
 function selectAnswer(e){
 	const selectedButton= e.target
