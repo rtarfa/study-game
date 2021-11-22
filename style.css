@@ -33,9 +33,24 @@ h2 {
   align-items: center;
   background-color:hsl((var --hue), 100%,20%);
 }
-
+/*
 .body.correct{
   --hue :var(--hue-correct);
+}*/
+
+.selected{ 
+  /*not working*/
+  background-color: green;
+}
+
+.name{
+  /*display: block;*/
+  display: inline-block;
+  white-space: nowrap;
+  padding: 12px;
+  /*flex-wrap: wrap;*/
+  color: red;
+  justify-content: space-between;
 }
 
 .body.wrong{
