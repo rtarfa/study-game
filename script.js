@@ -11,8 +11,12 @@ const ans4Element = document.getElementById('ans4')
 //const answerButtonsElement = document.getElementById('answer-buttons') 
 
 let shuffledQuestions, correctQuestionIndex;
-let quizScore = 0;
+let score1= 0
+let score2= 0
+let score3= 0 
+let score4 = 0;
 let correctPrevSelected = false;
+let currentlySelected = null;
 
 //instead of new page for game, just make start button disappear?
 
@@ -24,12 +28,28 @@ nextButton.addEventListener('click', () =>{
 		// correctQuestionIndex = 0;
 		startButton.innerText = "Restart"
 		startButton.classList.remove('hide')
+		startButton.addEventListener('click', restartGame)
 		nextButton.classList.add('hide')
 	} // show reset button/reset game
 	else {
 		setnextQuestion()
+		ans1Element.classList.remove("selected")
+		ans1Element.classList.add("notselected")
+
+		ans2Element.classList.remove("selected")
+		ans2Element.classList.add("notselected")
+
+		ans3Element.classList.remove("selected")
+		ans3Element.classList.add("notselected")
+
+		ans4Element.classList.remove("selected")
+		ans4Element.classList.add("notselected")
 	}		
 })
+
+function restartGame(){
+	window.location.reload();
+}
 
 function updateNames(){
 	const Name1 = document.getElementById('nameD1')
@@ -37,10 +57,10 @@ function updateNames(){
 	const Name3 = document.getElementById('nameD3')
 	const Name4 = document.getElementById('nameD4')
 
-	Name1.innerText = document.getElementById('name1').value
-	Name2.innerText = document.getElementById('name2').value
-	Name3.innerText = document.getElementById('name3').value
-	Name4.innerText = document.getElementById('name4').value
+	Name1.innerText = document.getElementById('name1').value + ": "
+	Name2.innerText = document.getElementById('name2').value + ": "
+	Name3.innerText = document.getElementById('name3').value + ": "
+	Name4.innerText = document.getElementById('name4').value + ": "
 }
 
 function startGame(){
@@ -52,7 +72,12 @@ function startGame(){
 	correctQuestionIndex=0;
 	questionContainerElement.classList.remove('hide') 
 	setnextQuestion()
-	quizScore=0
+	score1 = 0 
+	score2 = 0
+	score3 = 0 
+	score4 = 0
+
+	// document.getElementById("a").onclick =
 }
 
 function setnextQuestion(){
@@ -113,14 +138,20 @@ function resetState(){
 	clearStatusClass(ans2Element)
 	clearStatusClass(ans3Element)
 	clearStatusClass(ans4Element)
+	//reset scores??
 	// nextButton.classList.add('hide')
 	// while(answerButtonsElement.firstChild) {
 	// 	answerButtonsElement.removeChild(answerButtonsElement.firstChild)
 	// }
 }
 
-function selectAnswer(e){
+function selectAnswer(e, player){
 	
+	if (currentlySelected!=null) {
+		currentlySelected.classList.remove("selected")
+		currentlySelected.classList.add("notselected")
+	}
+
 	console.log("answer selected")
 	//const selectedButton= e.target
 	const correct = e.classList.contains('true');
@@ -129,7 +160,9 @@ function selectAnswer(e){
 	// 	quizScore--
 	// }
 
+	e.classList.remove("notselected")
 	e.classList.add("selected")
+	currentlySelected = e
 
 	//setStatusClass(document.body,correct) //need this for css
 	// Array.from(answerButtonsElement.children).forEach((button)=>{
@@ -145,15 +178,54 @@ function selectAnswer(e){
 	// 	startButton.classList.remove("hide")
 	// }
 	//if(selectedButton.dataset = correct) {
+	
 	if (correct && !correctPrevSelected){
 		correctPrevSelected = true
-		quizScore++ //problem is when chose a diff answer, quizscore goes up //quizScore = score from previous round + 1
+		if (player == 1){
+			console.log(score1)
+			score1++ 
+			document.getElementById('score1').innerText=score1
+			console.log("here")
+			console.log(score1)
+		}
+		if (player == 2){
+			score2++ 
+			document.getElementById('score2').innerText=score2
+		}
+		if (player == 3){
+			score3++ 
+			document.getElementById('score3').innerText=score3
+		}
+		if (player == 4){
+			score4++ 
+			document.getElementById('score4').innerText=score4
+		}
+		
+		
 	}
 	if (!correct && correctPrevSelected){
-		quizScore--
+		if (player == 1){
+			score1--
+			document.getElementById('score1').innerText=score1
+		}
+		if (player == 2){
+			score2-- 
+			document.getElementById('score2').innerText=score2
+		}
+		if (player == 3){
+			score3-- 
+			document.getElementById('score3').innerText=score3
+		}
+		if (player == 4){
+			score4-- 
+			document.getElementById('score4').innerText=score4
+		}
 		correctPrevSelected = false
 	}
-	document.getElementById('scoreboard').innerText=quizScore
+	
+	
+	
+	
 	//delete this after (show quiz score after that round)
 }
 

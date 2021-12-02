@@ -38,12 +38,7 @@ h2 {
   --hue :var(--hue-correct);
 }*/
 
-.selected{ 
-  /*not working*/
-  background-color: green;
-}
-
-.name{
+.name, .score{
   /*display: block;*/
   display: inline-block;
   white-space: nowrap;
@@ -72,10 +67,18 @@ h2 {
   margin: 20px 0;
 }
 
+.selected{ 
+  background-color: hsl(var(--hue), 100%, 40%);
+}
+
+.notselected{ 
+  background-color: hsl(var(--hue), 100%, 50%);
+}
+
 .btn{
   --hue: var(--hue-neutral);
   border: 1px solid hsl(var(--hue), 100%, 30%);
-  background-color: hsl(var(--hue), 100%, 50%);
+  /*background-color: hsl(var(--hue), 100%, 50%);*/
   border-radius: 5px;
   padding: 3px 5px;
   color: white;
@@ -93,6 +96,7 @@ h2 {
   font-weight: bold;
   padding: 5px 20px;
   cursor: pointer;
+  background-color: hsl(var(--hue), 100%, 50%);
 }
 
 .controls{

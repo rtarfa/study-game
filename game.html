@@ -23,30 +23,42 @@
       <textarea id="name4" name="name4" rows="1" cols="10"></textarea>
     </div>
     </div>
+
     <div id="question-container" class="hide"> 
       <div id="namesDisplay">
         <p id="nameD1" class="name">Name1</p>
+        <p id="score1" class="score">0</p>
+
         <p id="nameD2" class="name">Name2</p>
+        <p id="score2" class="score">0</p>
+
         <p id="nameD3" class="name">Name3</p>
+         <p id="score3" class="score">0</p>
+
         <p id="nameD4" class="name">Name4</p>
+        <p id="score4" class="score">0</p>
       </div>
+
+
       <div id="question" class="question">  
        <!-- <div id="answer-buttons" class="btn-grid"> class hide?  -->
        <!-- </div> -->
+
+
      </div> 
-          <button id= "ans1" class="btn" onclick="selectAnswer(ans1)"> Answer 1 </button>
-         <button id= "ans2" class="btn" onclick="selectAnswer(ans2)"> Answer 2 </button>
-         <button id= "ans3" class="btn" onclick="selectAnswer(ans3)"> Answer 3 </button>
-         <button id= "ans4" class="btn" onclick="selectAnswer(ans4)"> Answer 4 </button>
+          <button id= "ans1" class="btn notselected" onclick="selectAnswer(ans1, 1)"> Answer 1 </button>
+         <button id= "ans2" class="btn notselected" onclick="selectAnswer(ans2, 1)"> Answer 2 </button>
+         <button id= "ans3" class="btn notselected" onclick="selectAnswer(ans3, 1)"> Answer 3 </button>
+         <button id= "ans4" class="btn notselected" onclick="selectAnswer(ans4, 1)"> Answer 4 </button>
     </div>
     <div class="controls">
       <!-- <button id="start-btn" class="start-btn btn hide"></button> -->
-      <button id="start-btn" class="next-btn btn">Start</button> 
+      <button id="start-btn" class="start-btn btn">Start</button> 
       <button id="next-btn" class="next-btn btn hide">Next</button> 
      <!--  change to radio buttons? -->
     </div>
     <div class="score">
-      <span id="scoreboard"></span>
+      
 
   </div>
   <script src="script.js"></script>
