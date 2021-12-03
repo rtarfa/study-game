@@ -1,6 +1,7 @@
 
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
+const nextPlayerButton = document.getElementById('next-player-btn')
 const questionContainerElement = document.getElementById('question-container')
 const namesContainerElement = document.getElementById('start')
 const questionElement = document.getElementById('question')
@@ -8,6 +9,8 @@ const ans1Element = document.getElementById('ans1')
 const ans2Element = document.getElementById('ans2')
 const ans3Element = document.getElementById('ans3')
 const ans4Element = document.getElementById('ans4')
+const playersTurnElement = document.getElementById('currName')
+const round2Element = document.getElementById('round2')
 //const answerButtonsElement = document.getElementById('answer-buttons') 
 
 let shuffledQuestions, correctQuestionIndex;
@@ -15,24 +18,21 @@ let score1= 0
 let score2= 0
 let score3= 0 
 let score4 = 0;
+let currPlayer= 0;
+let currRound = 1;
 let correctPrevSelected = false;
 let currentlySelected = null;
+let p1correct = false;
+let p2correct = false;
+let p3correct = false;
+let p4correct = false;
 
 //instead of new page for game, just make start button disappear?
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () =>{
-	correctQuestionIndex++
-	console.log(correctQuestionIndex)
-	if (correctQuestionIndex > (questions.length-1)){
-		// correctQuestionIndex = 0;
-		startButton.innerText = "Restart"
-		startButton.classList.remove('hide')
-		startButton.addEventListener('click', restartGame)
-		nextButton.classList.add('hide')
-	} // show reset button/reset game
-	else {
-		setnextQuestion()
+	if ((!p1correct || !p2correct || !p3correct || !p4correct) && currRound==1){
+		setNextRound()
 		ans1Element.classList.remove("selected")
 		ans1Element.classList.add("notselected")
 
@@ -44,11 +44,74 @@ nextButton.addEventListener('click', () =>{
 
 		ans4Element.classList.remove("selected")
 		ans4Element.classList.add("notselected")
-	}		
+
+		nextButton.classList.add('hide')
+		nextPlayerButton.classList.remove('hide')
+	}
+	else{
+		if (currRound==2){
+			if (p1correct){
+				document.getElementById('score1').innerText=score1
+				// score1+=5
+			}
+			if (p2correct){
+				document.getElementById('score2').innerText=score2
+				// score2+=5
+			}
+			if (p3correct){
+				document.getElementById('score3').innerText=score3
+				// score3+=5
+			}
+			if (p4correct){
+				document.getElementById('score4').innerText=score4
+				// score4+=5
+			}
+			//reset to round 1
+		}
+		round2Element.classList.add('hide')
+		correctQuestionIndex++
+		console.log(correctQuestionIndex)
+		if (correctQuestionIndex > (questions.length-1)){
+			// correctQuestionIndex = 0;
+			startButton.innerText = "Restart"
+			startButton.classList.remove('hide')
+			startButton.addEventListener('click', restartGame)
+			nextButton.classList.add('hide')
+		} // show reset button/reset game
+		else {
+			setnextQuestion()
+			currPlayer = 1
+			ans1Element.classList.remove("selected")
+			ans1Element.classList.add("notselected")
+
+			ans2Element.classList.remove("selected")
+			ans2Element.classList.add("notselected")
+
+			ans3Element.classList.remove("selected")
+			ans3Element.classList.add("notselected")
+
+			ans4Element.classList.remove("selected")
+			ans4Element.classList.add("notselected")
+		}		
+
+	}
+	
 })
 
 function restartGame(){
+	//before restarting, show final scores
 	window.location.reload();
+}
+
+function setNextRound(){
+	correctPrevSelected = false
+	round2Element.classList.remove('hide')
+	currRound++
+	currPlayer = 1
+	p1correct = false
+	p2correct = false
+	p3correct = false
+	p4correct = false
 }
 
 function updateNames(){
@@ -67,22 +130,72 @@ function startGame(){
 	updateNames()
 	namesContainerElement.classList.add('hide')
 	startButton.classList.add('hide')
-	nextButton.classList.remove('hide')
+	// nextButton.classList.remove('hide')
+	nextPlayerButton.classList.remove('hide')
 	shuffledQuestions=questions.sort(() => Math.random() - 0.5)
 	correctQuestionIndex=0;
 	questionContainerElement.classList.remove('hide') 
 	setnextQuestion()
+
+
+	// setnextQuestion()
 	score1 = 0 
 	score2 = 0
 	score3 = 0 
 	score4 = 0
+	currPlayer = 1
 
-	// document.getElementById("a").onclick =
+
+	playersTurnElement.innerText = document.getElementById('name1').value + "'s Turn"
+	
+}
+
+function changePlayer(){
+	console.log("here")
+	console.log(currPlayer)
+	correctPrevSelected = false
+	if (currPlayer==3){
+		nextButton.classList.remove('hide')
+		nextPlayerButton.classList.add('hide')
+		currPlayer++;
+	}
+	else{
+		currPlayer++
+	}
+
+	ans1Element.classList.remove("selected")
+	ans1Element.classList.add("notselected")
+
+	ans2Element.classList.remove("selected")
+	ans2Element.classList.add("notselected")
+
+	ans3Element.classList.remove("selected")
+	ans3Element.classList.add("notselected")
+
+	ans4Element.classList.remove("selected")
+	ans4Element.classList.add("notselected")
+
+	document.getElementById("ans1").setAttribute('onclick','selectAnswer(ans1, currPlayer)')
+	document.getElementById("ans2").setAttribute('onclick','selectAnswer(ans2, currPlayer)')
+	document.getElementById("ans3").setAttribute('onclick','selectAnswer(ans3, currPlayer)')
+	document.getElementById("ans4").setAttribute('onclick','selectAnswer(ans4, currPlayer)')
+
+	if (currPlayer == 2){
+		playersTurnElement.innerText = document.getElementById('name2').value + "'s Turn"
+	}
+	if (currPlayer == 3){
+		playersTurnElement.innerText = document.getElementById('name3').value + "'s Turn"
+	}
+	if (currPlayer == 4){
+		playersTurnElement.innerText = document.getElementById('name4').value + "'s Turn"
+	}
 }
 
 function setnextQuestion(){
 	resetState(); //is this even working
 	showQuestion(shuffledQuestions[correctQuestionIndex]);
+	nextButton.classList.add('hide')
+	nextPlayerButton.classList.remove('hide')
 	//if run out of questions..reset??
 }
 
@@ -146,7 +259,6 @@ function resetState(){
 }
 
 function selectAnswer(e, player){
-	
 	if (currentlySelected!=null) {
 		currentlySelected.classList.remove("selected")
 		currentlySelected.classList.add("notselected")
@@ -181,52 +293,133 @@ function selectAnswer(e, player){
 	
 	if (correct && !correctPrevSelected){
 		correctPrevSelected = true
-		if (player == 1){
-			console.log(score1)
-			score1++ 
+		// if (currRound == 1){
+			if (player == 1){
+			// console.log(score1)
+			// if (currRound = 1){ //reset round to 1 after round 2
+			// 		score1+=10
+			// 	}
+			// 	if (currRound = 2){
+			// 		score1+=5
+			// 	}
+			score1+=10
 			document.getElementById('score1').innerText=score1
-			console.log("here")
-			console.log(score1)
-		}
-		if (player == 2){
-			score2++ 
-			document.getElementById('score2').innerText=score2
-		}
-		if (player == 3){
-			score3++ 
-			document.getElementById('score3').innerText=score3
-		}
-		if (player == 4){
-			score4++ 
-			document.getElementById('score4').innerText=score4
-		}
+			// console.log("here")
+			// console.log(score1)
+			}
+			if (player == 2){
+				// if (currRound == 1){ //reset round to 1 after round 2
+				// 	score2+=10
+				// }
+				// else if (currRound == 2){
+				// 	score2+=5
+				// }
+				score2+=10
+				document.getElementById('score2').innerText=score2
+			}
+			if (player == 3){
+				// if (currRound == 1){ //reset round to 1 after round 2
+				// 	score3+=10
+				// }
+				// else if (currRound == 2){
+				// 	score3+=5
+				// }
+				score3+=10
+				document.getElementById('score3').innerText=score3
+			}
+			if (player == 4){
+				// if (currRound == 1){ //reset round to 1 after round 2
+				// 	score4+=10
+				// }
+				// else if (currRound == 2){
+				// 	score4+=5
+				// }
+				score4+=10
+				document.getElementById('score4').innerText=score4
+			}
+		// }
+		// else{
+			if (currPlayer==1){
+				p1correct = true
+			}
+			if (currPlayer==2){
+				p2correct = true
+			}
+			if (currPlayer==3){
+				p3correct = true
+			}
+			if (currPlayer==4){
+				p4correct = true
+			}
+
+		// }
+		
 		
 		
 	}
 	if (!correct && correctPrevSelected){
-		if (player == 1){
-			score1--
-			document.getElementById('score1').innerText=score1
-		}
-		if (player == 2){
-			score2-- 
-			document.getElementById('score2').innerText=score2
-		}
-		if (player == 3){
-			score3-- 
-			document.getElementById('score3').innerText=score3
-		}
-		if (player == 4){
-			score4-- 
-			document.getElementById('score4').innerText=score4
-		}
+		// if (currRound == 1){
+			if (player == 1){
+				// if (currRound = 1){ //reset round to 1 after round 2
+				// 	score1-=10
+				// }
+				// else if (currRound = 2){
+				// 	score1-=5
+				// }
+				score1-=10
+				console.log(currRound)
+				document.getElementById('score1').innerText=score1
+			}
+			if (player == 2){x
+				// if (currRound = 1){ //reset round to 1 after round 2
+				// 	score2-=10
+				// }
+				// else if (currRound = 2){
+				// 	score2-=5
+				// }
+				score2-=10
+				document.getElementById('score2').innerText=score2
+			}
+			if (player == 3){
+				// if (currRound = 1){ //reset round to 1 after round 2
+				// 	score3-=10
+				// }
+				// else if (currRound = 2){
+				// 	score3-=5
+				// } 
+				score3-=10
+				document.getElementById('score3').innerText=score3
+			}
+			if (player == 4){
+				// if (currRound = 1){ //reset round to 1 after round 2
+				// 	score4-=10
+				// }
+				// else if (currRound = 2){
+				// 	score4-=5
+				// }
+				score4-=10
+				document.getElementById('score4').innerText=score4
+			}
+
+		// }
+		// else{
+			if (currPlayer==1){
+				p1correct = false
+			}
+			if (currPlayer==2){
+				p2correct = false
+			}
+			if (currPlayer==3){
+				p3correct = false
+			}
+			if (currPlayer==4){
+				p4correct = false
+			}
+
+		// }
 		correctPrevSelected = false
 	}
 	
-	
-	
-	
-	//delete this after (show quiz score after that round)
 }
 
 function setStatusClass(element,correct){ //don't really need this function
@@ -243,7 +436,7 @@ function clearStatusClass(element){
 	element.classList.remove('false')
 }
 
-const questions = [ //pull from practice test
+const questions = [ //pull from practice test //separate file?
 	{
 		question: "which one is this?",
 		answers: [
