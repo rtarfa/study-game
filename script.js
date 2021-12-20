@@ -360,44 +360,45 @@ function selectAnswer(e, player){
 	if (!correct && correctPrevSelected){
 		// if (currRound == 1){
 			if (player == 1){
-				// if (currRound = 1){ //reset round to 1 after round 2
-				// 	score1-=10
-				// }
-				// else if (currRound = 2){
-				// 	score1-=5
-				// }
-				score1-=10
+				if (currRound = 1){ //reset round to 1 after round 2
+					score1-=10
+				}
+				else if (currRound = 2){
+					score1-=5
+				}
+				//score1-=10
 				console.log(currRound)
 				document.getElementById('score1').innerText=score1
 			}
 			if (player == 2){x
-				// if (currRound = 1){ //reset round to 1 after round 2
-				// 	score2-=10
-				// }
-				// else if (currRound = 2){
-				// 	score2-=5
-				// }
-				score2-=10
+				if (currRound = 1){ //reset round to 1 after round 2
+					score2-=10
+				}
+				else if (currRound = 2){
+					score2-=5
+				}
+				// score2-=10
 				document.getElementById('score2').innerText=score2
 			}
 			if (player == 3){
-				// if (currRound = 1){ //reset round to 1 after round 2
-				// 	score3-=10
-				// }
-				// else if (currRound = 2){
-				// 	score3-=5
-				// } 
-				score3-=10
+				if (currRound = 1){ //reset round to 1 after round 2
+					score3-=10
+				}
+				else if (currRound = 2){
+					score3-=5
+				} 
+				// score3-=10
 				document.getElementById('score3').innerText=score3
+				//not everyone agreed adds too many points
 			}
 			if (player == 4){
-				// if (currRound = 1){ //reset round to 1 after round 2
-				// 	score4-=10
-				// }
-				// else if (currRound = 2){
-				// 	score4-=5
-				// }
-				score4-=10
+				if (currRound = 1){ //reset round to 1 after round 2
+					score4-=10
+				}
+				else if (currRound = 2){
+					score4-=5
+				}
+				// score4-=10
 				document.getElementById('score4').innerText=score4
 			}
 
