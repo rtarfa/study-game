@@ -1,3 +1,9 @@
+/*
+TODO: Reset round to round 1 after revealing answer
+have second round available for all questions
+
+*/
+
 
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
@@ -14,18 +20,12 @@ const round2Element = document.getElementById('round2')
 //const answerButtonsElement = document.getElementById('answer-buttons') 
 
 let shuffledQuestions, correctQuestionIndex;
-let score1= 0
-let score2= 0
-let score3= 0 
-let score4 = 0;
+let score1, score2, score3, score4 = 0;
 let currPlayer= 0;
 let currRound = 1;
 let correctPrevSelected = false;
 let currentlySelected = null;
-let p1correct = false;
-let p2correct = false;
-let p3correct = false;
-let p4correct = false;
+let p1correct, p2correct, p3correct, p4correct = false;
 
 //instead of new page for game, just make start button disappear?
 
@@ -296,59 +296,55 @@ function selectAnswer(e, player){
 		// if (currRound == 1){
 			if (player == 1){
 			// console.log(score1)
-			// if (currRound = 1){ //reset round to 1 after round 2
-			// 		score1+=10
-			// 	}
-			// 	if (currRound = 2){
-			// 		score1+=5
-			// 	}
-			score1+=10
+			if (currRound == 1){ //reset round to 1 after round 2
+					score1+=10
+				}
+				if (currRound == 2){
+					score1+=5
+				}
 			document.getElementById('score1').innerText=score1
 			// console.log("here")
 			// console.log(score1)
 			}
 			if (player == 2){
-				// if (currRound == 1){ //reset round to 1 after round 2
-				// 	score2+=10
-				// }
-				// else if (currRound == 2){
-				// 	score2+=5
-				// }
-				score2+=10
+				if (currRound == 1){ //reset round to 1 after round 2
+					score2+=10
+				}
+				else if (currRound == 2){
+					score2+=5
+				}
 				document.getElementById('score2').innerText=score2
 			}
 			if (player == 3){
-				// if (currRound == 1){ //reset round to 1 after round 2
-				// 	score3+=10
-				// }
-				// else if (currRound == 2){
-				// 	score3+=5
-				// }
-				score3+=10
+				if (currRound == 1){ //reset round to 1 after round 2
+					score3+=10
+				}
+				else if (currRound == 2){
+					score3+=5
+				}
 				document.getElementById('score3').innerText=score3
 			}
 			if (player == 4){
-				// if (currRound == 1){ //reset round to 1 after round 2
-				// 	score4+=10
-				// }
-				// else if (currRound == 2){
-				// 	score4+=5
-				// }
-				score4+=10
+				if (currRound == 1){ //reset round to 1 after round 2
+					score4+=10
+				}
+				else if (currRound == 2){
+					score4+=5
+				}
 				document.getElementById('score4').innerText=score4
 			}
 		// }
 		// else{
-			if (currPlayer==1){
+			if (currPlayer == 1){
 				p1correct = true
 			}
-			if (currPlayer==2){
+			if (currPlayer == 2){
 				p2correct = true
 			}
-			if (currPlayer==3){
+			if (currPlayer == 3){
 				p3correct = true
 			}
-			if (currPlayer==4){
+			if (currPlayer == 4){
 				p4correct = true
 			}
 
@@ -360,31 +356,31 @@ function selectAnswer(e, player){
 	if (!correct && correctPrevSelected){
 		// if (currRound == 1){
 			if (player == 1){
-				if (currRound = 1){ //reset round to 1 after round 2
+				if (currRound == 1){ //reset round to 1 after round 2
 					score1-=10
 				}
-				else if (currRound = 2){
+				else if (currRound == 2){
 					score1-=5
 				}
 				//score1-=10
 				console.log(currRound)
 				document.getElementById('score1').innerText=score1
 			}
-			if (player == 2){x
-				if (currRound = 1){ //reset round to 1 after round 2
+			if (player == 2){
+				if (currRound == 1){ //reset round to 1 after round 2
 					score2-=10
 				}
-				else if (currRound = 2){
+				else if (currRound == 2){
 					score2-=5
 				}
 				// score2-=10
 				document.getElementById('score2').innerText=score2
 			}
 			if (player == 3){
-				if (currRound = 1){ //reset round to 1 after round 2
+				if (currRound == 1){ //reset round to 1 after round 2
 					score3-=10
 				}
-				else if (currRound = 2){
+				else if (currRound == 2){
 					score3-=5
 				} 
 				// score3-=10
@@ -392,10 +388,10 @@ function selectAnswer(e, player){
 				//not everyone agreed adds too many points
 			}
 			if (player == 4){
-				if (currRound = 1){ //reset round to 1 after round 2
+				if (currRound == 1){ //reset round to 1 after round 2
 					score4-=10
 				}
-				else if (currRound = 2){
+				else if (currRound == 2){
 					score4-=5
 				}
 				// score4-=10
@@ -439,22 +435,22 @@ function clearStatusClass(element){
 
 const questions = [ //pull from practice test //separate file?
 	{
-		question: "which one is this?",
+		question: "What's the runtime of binary sort?",
 		answers: [
-			{text: 'hellooo', correct: false},
-			{text: 'hellooo', correct: false},
-			{text: 'yesss', correct: true},
-			{text: 'hellooo', correct: false}	
+			{text: '2O(n)', correct: false},
+			{text: 'O(n)', correct: false},
+			{text: 'O(log n)', correct: true},
+			{text: 'O(n)^2', correct: false}	
 		],
 	},
 
 	{
-		question: "who is the best hxh char?",
+		question: "What is the height of this tree?",
 		answers: [
-			{text: 'gon', correct: false},
-			{text: 'killua', correct: true},
-			{text: 'illumi', correct: false},
-			{text: 'hisoka', correct: false}
+			{text: '5', correct: false},
+			{text: '3', correct: true},
+			{text: '4', correct: false},
+			{text: 'None of the above', correct: false}
 		],
 	},
 
