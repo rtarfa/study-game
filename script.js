@@ -1,7 +1,6 @@
 /*
 TODO: Reset round to round 1 after revealing answer
-have second round available for all questions
-
+reset button fill up whole screen at end (has probs)
 */
 
 
@@ -29,48 +28,40 @@ let p1correct, p2correct, p3correct, p4correct = false;
 
 //instead of new page for game, just make start button disappear?
 
+function restartSelection(){
+	ans1Element.classList.remove("selected")
+	ans1Element.classList.add("notselected")
+
+	ans2Element.classList.remove("selected")
+	ans2Element.classList.add("notselected")
+
+	ans3Element.classList.remove("selected")
+	ans3Element.classList.add("notselected")
+
+	ans4Element.classList.remove("selected")
+	ans4Element.classList.add("notselected")
+}
+
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () =>{
 	if ((!p1correct || !p2correct || !p3correct || !p4correct) && currRound==1){
 		setNextRound()
-		ans1Element.classList.remove("selected")
-		ans1Element.classList.add("notselected")
-
-		ans2Element.classList.remove("selected")
-		ans2Element.classList.add("notselected")
-
-		ans3Element.classList.remove("selected")
-		ans3Element.classList.add("notselected")
-
-		ans4Element.classList.remove("selected")
-		ans4Element.classList.add("notselected")
-
-		nextButton.classList.add('hide')
-		nextPlayerButton.classList.remove('hide')
+		restartSelection()
+		// nextButton.classList.add('hide')
+		// nextPlayerButton.classList.remove('hide')
 	}
 	else{
 		if (currRound==2){
-			if (p1correct){
-				document.getElementById('score1').innerText=score1
-				// score1+=5
-			}
-			if (p2correct){
-				document.getElementById('score2').innerText=score2
-				// score2+=5
-			}
-			if (p3correct){
-				document.getElementById('score3').innerText=score3
-				// score3+=5
-			}
-			if (p4correct){
-				document.getElementById('score4').innerText=score4
-				// score4+=5
-			}
-			//reset to round 1
+
+		// 	nextPlayerButton.classList.add('hide')
+		// 	nextButton.classList.remove('hide')
+		// 	playersTurnElement.classList.add('hide')
+		// 	//reset to round 1
+			round2Element.classList.add('hide')
+		 	currRound = 1
 		}
-		round2Element.classList.add('hide')
+		playersTurnElement.classList.remove('hide')
 		correctQuestionIndex++
-		console.log(correctQuestionIndex)
 		if (correctQuestionIndex > (questions.length-1)){
 			// correctQuestionIndex = 0;
 			startButton.innerText = "Restart"
@@ -80,19 +71,11 @@ nextButton.addEventListener('click', () =>{
 		} // show reset button/reset game
 		else {
 			setnextQuestion()
+			restartSelection()
 			currPlayer = 1
-			ans1Element.classList.remove("selected")
-			ans1Element.classList.add("notselected")
+		}	
 
-			ans2Element.classList.remove("selected")
-			ans2Element.classList.add("notselected")
-
-			ans3Element.classList.remove("selected")
-			ans3Element.classList.add("notselected")
-
-			ans4Element.classList.remove("selected")
-			ans4Element.classList.add("notselected")
-		}		
+			
 
 	}
 	
@@ -106,6 +89,7 @@ function restartGame(){
 function setNextRound(){
 	correctPrevSelected = false
 	round2Element.classList.remove('hide')
+	playersTurnElement.classList.add('hide')
 	currRound++
 	currPlayer = 1
 	p1correct = false
@@ -145,50 +129,50 @@ function startGame(){
 	score4 = 0
 	currPlayer = 1
 
-
+	playersTurnElement.classList.remove("hide")
 	playersTurnElement.innerText = document.getElementById('name1').value + "'s Turn"
 	
 }
 
 function changePlayer(){
-	console.log("here")
-	console.log(currPlayer)
-	correctPrevSelected = false
-	if (currPlayer==3){
-		nextButton.classList.remove('hide')
-		nextPlayerButton.classList.add('hide')
-		currPlayer++;
-	}
-	else{
-		currPlayer++
-	}
+	// if (currRound == 1){
+		playersTurnElement.classList.remove("hide")
+		correctPrevSelected = false
+		if (currPlayer == 3){
+			nextButton.classList.remove('hide')
+			nextPlayerButton.classList.add('hide')
+			currPlayer++;
+		}
+		else{
+			currPlayer++
+		}
 
-	ans1Element.classList.remove("selected")
-	ans1Element.classList.add("notselected")
+		if (currPlayer == 2){
+			playersTurnElement.innerText = document.getElementById('name2').value + "'s Turn"
+		}
+		if (currPlayer == 3){
+			playersTurnElement.innerText = document.getElementById('name3').value + "'s Turn"
+		}
+		if (currPlayer == 4){
+			playersTurnElement.innerText = document.getElementById('name4').value + "'s Turn"
+		}
+	// }
+	// else{
+	// 	currPlayer = 1
+	// 	nextButton.classList.remove('hide')
+	// 	nextPlayerButton.classList.add('hide')
+	// 	playersTurnElement
+		
+		
+	// }
 
-	ans2Element.classList.remove("selected")
-	ans2Element.classList.add("notselected")
+		restartSelection()
 
-	ans3Element.classList.remove("selected")
-	ans3Element.classList.add("notselected")
-
-	ans4Element.classList.remove("selected")
-	ans4Element.classList.add("notselected")
-
-	document.getElementById("ans1").setAttribute('onclick','selectAnswer(ans1, currPlayer)')
-	document.getElementById("ans2").setAttribute('onclick','selectAnswer(ans2, currPlayer)')
-	document.getElementById("ans3").setAttribute('onclick','selectAnswer(ans3, currPlayer)')
-	document.getElementById("ans4").setAttribute('onclick','selectAnswer(ans4, currPlayer)')
-
-	if (currPlayer == 2){
-		playersTurnElement.innerText = document.getElementById('name2').value + "'s Turn"
-	}
-	if (currPlayer == 3){
-		playersTurnElement.innerText = document.getElementById('name3').value + "'s Turn"
-	}
-	if (currPlayer == 4){
-		playersTurnElement.innerText = document.getElementById('name4').value + "'s Turn"
-	}
+		document.getElementById("ans1").setAttribute('onclick','selectAnswer(ans1, currPlayer)') 
+		document.getElementById("ans2").setAttribute('onclick','selectAnswer(ans2, currPlayer)')
+		document.getElementById("ans3").setAttribute('onclick','selectAnswer(ans3, currPlayer)')
+		document.getElementById("ans4").setAttribute('onclick','selectAnswer(ans4, currPlayer)')
+	
 }
 
 function setnextQuestion(){
@@ -196,6 +180,7 @@ function setnextQuestion(){
 	showQuestion(shuffledQuestions[correctQuestionIndex]);
 	nextButton.classList.add('hide')
 	nextPlayerButton.classList.remove('hide')
+	currRound = 1
 	//if run out of questions..reset??
 }
 
@@ -294,47 +279,53 @@ function selectAnswer(e, player){
 	if (correct && !correctPrevSelected){
 		correctPrevSelected = true
 		// if (currRound == 1){
+
+		if (currRound == 1){ 
 			if (player == 1){
 			// console.log(score1)
-			if (currRound == 1){ //reset round to 1 after round 2
-					score1+=10
+			//reset round to 1 after round 2
+				score1+=10
+				document.getElementById('score1').innerText=score1
 				}
-				if (currRound == 2){
-					score1+=5
-				}
-			document.getElementById('score1').innerText=score1
-			// console.log("here")
-			// console.log(score1)
-			}
+			// if (currRound == 2){
+			// 	score1+=5
+			// }
 			if (player == 2){
-				if (currRound == 1){ //reset round to 1 after round 2
-					score2+=10
-				}
-				else if (currRound == 2){
-					score2+=5
-				}
+				score2+=10
 				document.getElementById('score2').innerText=score2
 			}
+			// else if (currRound == 2){
+			// 	score2+=5
+			// }
 			if (player == 3){
-				if (currRound == 1){ //reset round to 1 after round 2
-					score3+=10
-				}
-				else if (currRound == 2){
-					score3+=5
-				}
+				score3+=10
 				document.getElementById('score3').innerText=score3
 			}
+			// else if (currRound == 2){
+			// 	score3+=5
+			// }
 			if (player == 4){
-				if (currRound == 1){ //reset round to 1 after round 2
-					score4+=10
-				}
-				else if (currRound == 2){
-					score4+=5
-				}
+				score4+=10
 				document.getElementById('score4').innerText=score4
 			}
-		// }
-		// else{
+			// else if (currRound == 2){
+			// 	score4+=5
+			// }
+			
+		}
+
+		else if (currRound == 2){ 
+			score1+=5
+			score2+=5
+			score3+=5
+			score4+=5
+
+			document.getElementById('score1').innerText=score1
+			document.getElementById('score2').innerText=score2
+			document.getElementById('score3').innerText=score3
+			document.getElementById('score4').innerText=score4
+		}
+
 			if (currPlayer == 1){
 				p1correct = true
 			}
@@ -348,13 +339,12 @@ function selectAnswer(e, player){
 				p4correct = true
 			}
 
-		// }
-		
-		
-		
+				
 	}
+			
 	if (!correct && correctPrevSelected){
-		// if (currRound == 1){
+		correctPrevSelected = false
+		if (currRound == 1){
 			if (player == 1){
 				if (currRound == 1){ //reset round to 1 after round 2
 					score1-=10
@@ -397,9 +387,20 @@ function selectAnswer(e, player){
 				// score4-=10
 				document.getElementById('score4').innerText=score4
 			}
+		}
 
 		// }
-		// else{
+		else{
+			score1-=5
+			score2-=5
+			score3-=5
+			score4-=5
+
+			document.getElementById('score1').innerText=score1
+			document.getElementById('score2').innerText=score2
+			document.getElementById('score3').innerText=score3
+			document.getElementById('score4').innerText=score4
+		}
 			if (currPlayer==1){
 				p1correct = false
 			}
@@ -414,10 +415,10 @@ function selectAnswer(e, player){
 			}
 
 		// }
-		correctPrevSelected = false
+
 	}
-	
 }
+	
 
 function setStatusClass(element,correct){ //don't really need this function
 	clearStatusClass(element)
