@@ -1,6 +1,10 @@
 /*
 TODO: Reset round to round 1 after revealing answer
 reset button fill up whole screen at end (has probs)
+remove scoring; only show at end of 1st round if everyone right, end of 2nd round (That's correct - w explanation OR That's wrong - w correct answer and explanation)
+also figure out scoring/penalties
+before restarting, show final scores
+instead of new page for game, just make start button disappear?
 */
 
 
@@ -16,7 +20,6 @@ const ans3Element = document.getElementById('ans3')
 const ans4Element = document.getElementById('ans4')
 const playersTurnElement = document.getElementById('currName')
 const round2Element = document.getElementById('round2')
-//const answerButtonsElement = document.getElementById('answer-buttons') 
 
 let shuffledQuestions, correctQuestionIndex;
 let score1, score2, score3, score4 = 0;
@@ -26,7 +29,6 @@ let correctPrevSelected = false;
 let currentlySelected = null;
 let p1correct, p2correct, p3correct, p4correct = false;
 
-//instead of new page for game, just make start button disappear?
 
 function restartSelection(){
 	ans1Element.classList.remove("selected")
@@ -47,42 +49,31 @@ nextButton.addEventListener('click', () =>{
 	if ((!p1correct || !p2correct || !p3correct || !p4correct) && currRound==1){
 		setNextRound()
 		restartSelection()
-		// nextButton.classList.add('hide')
-		// nextPlayerButton.classList.remove('hide')
 	}
 	else{
 		if (currRound==2){
-
-		// 	nextPlayerButton.classList.add('hide')
-		// 	nextButton.classList.remove('hide')
-		// 	playersTurnElement.classList.add('hide')
-		// 	//reset to round 1
 			round2Element.classList.add('hide')
 		 	currRound = 1
 		}
 		playersTurnElement.classList.remove('hide')
 		correctQuestionIndex++
 		if (correctQuestionIndex > (questions.length-1)){
-			// correctQuestionIndex = 0;
 			startButton.innerText = "Restart"
 			startButton.classList.remove('hide')
 			startButton.addEventListener('click', restartGame)
 			nextButton.classList.add('hide')
-		} // show reset button/reset game
+		} 
 		else {
 			setnextQuestion()
 			restartSelection()
 			currPlayer = 1
 		}	
 
-			
-
 	}
 	
 })
 
 function restartGame(){
-	//before restarting, show final scores
 	window.location.reload();
 }
 
@@ -114,20 +105,18 @@ function startGame(){
 	updateNames()
 	namesContainerElement.classList.add('hide')
 	startButton.classList.add('hide')
-	// nextButton.classList.remove('hide')
 	nextPlayerButton.classList.remove('hide')
 	shuffledQuestions=questions.sort(() => Math.random() - 0.5)
 	correctQuestionIndex=0;
 	questionContainerElement.classList.remove('hide') 
 	setnextQuestion()
 
-
-	// setnextQuestion()
 	score1 = 0 
 	score2 = 0
 	score3 = 0 
 	score4 = 0
 	currPlayer = 1
+	currRound = 1
 
 	playersTurnElement.classList.remove("hide")
 	playersTurnElement.innerText = document.getElementById('name1').value + "'s Turn"
@@ -135,7 +124,6 @@ function startGame(){
 }
 
 function changePlayer(){
-	// if (currRound == 1){
 		playersTurnElement.classList.remove("hide")
 		correctPrevSelected = false
 		if (currPlayer == 3){
@@ -156,15 +144,6 @@ function changePlayer(){
 		if (currPlayer == 4){
 			playersTurnElement.innerText = document.getElementById('name4').value + "'s Turn"
 		}
-	// }
-	// else{
-	// 	currPlayer = 1
-	// 	nextButton.classList.remove('hide')
-	// 	nextPlayerButton.classList.add('hide')
-	// 	playersTurnElement
-		
-		
-	// }
 
 		restartSelection()
 
@@ -181,7 +160,6 @@ function setnextQuestion(){
 	nextButton.classList.add('hide')
 	nextPlayerButton.classList.remove('hide')
 	currRound = 1
-	//if run out of questions..reset??
 }
 
 function showQuestion(question) {
@@ -190,57 +168,29 @@ function showQuestion(question) {
 	ans1Element.innerText = question.answers[0].text;
 
 	if(question.answers[0].correct){
-		//ans1Element.dataset.correct = question.answers[0].correct
 		ans1Element.classList.add('true')
 	}
-		//answerButtonsElement.appendChild(button)
 	ans2Element.innerText = question.answers[1].text;
 	if(question.answers[1].correct){
-		//ans2Element.dataset.correct = question.answers[1].correct
 		ans2Element.classList.add('true')
 	}
 	ans3Element.innerText = question.answers[2].text;
 	if(question.answers[2].correct){
-		//ans3Element.dataset.correct = question.answers[2].correct
 		ans3Element.classList.add('true')
 	}
 	ans4Element.innerText = question.answers[3].text;
 	if(question.answers[3].correct){
-		//ans4Element.dataset.correct = question.answers[3].correct
 		ans4Element.classList.add('true')
 	}
-
-	// button.addEventListener('click', selectAnswer)
-	
-	// question.answers.forEach((answer) =>{
-	// 	//loop through answers 
-	// 	// answerButtonsElement
-    	
-	// 	// const button = document.createElement("button")
-	// 	// button.innerText=answer.text;
-	// 	// button.classList.add('btn')
-
-	// 	if(answer.correct){
-	// 		button.dataset.correct = answer.correct
-	// 	}
-	// 	button.addEventListener('click', selectAnswer)
-	// 	answerButtonsElement.appendChild(button)
-	// })
 }
 
 
 function resetState(){
-	//clearStatusClass(document.body)
 	clearStatusClass(questionElement)
 	clearStatusClass(ans1Element)
 	clearStatusClass(ans2Element)
 	clearStatusClass(ans3Element)
 	clearStatusClass(ans4Element)
-	//reset scores??
-	// nextButton.classList.add('hide')
-	// while(answerButtonsElement.firstChild) {
-	// 	answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-	// }
 }
 
 function selectAnswer(e, player){
@@ -250,68 +200,28 @@ function selectAnswer(e, player){
 	}
 
 	console.log("answer selected")
-	//const selectedButton= e.target
 	const correct = e.classList.contains('true');
-
-	// if (correct && correctPrevSelected){
-	// 	quizScore--
-	// }
 
 	e.classList.remove("notselected")
 	e.classList.add("selected")
 	currentlySelected = e
-
-	//setStatusClass(document.body,correct) //need this for css
-	// Array.from(answerButtonsElement.children).forEach((button)=>{
-	// 	setStatusClass(button, button.dataset.correct)
-	// })
-	// if(shuffledQuestions.length > correctQuestionIndex+1){
-	// 	//nextButton.classList.remove("hide")
-	// 	nextButton.innerText="restart"
-	// 	nextButton.classList.remove("hide") //needed?
-	// }
-	// else{
-	// 	startButton.innerText = "Restart"
-	// 	startButton.classList.remove("hide")
-	// }
-	//if(selectedButton.dataset = correct) {
 	
 	if (correct && !correctPrevSelected){
 		correctPrevSelected = true
-		// if (currRound == 1){
 
 		if (currRound == 1){ 
 			if (player == 1){
-			// console.log(score1)
-			//reset round to 1 after round 2
 				score1+=10
-				document.getElementById('score1').innerText=score1
-				}
-			// if (currRound == 2){
-			// 	score1+=5
-			// }
+			}
 			if (player == 2){
 				score2+=10
-				document.getElementById('score2').innerText=score2
 			}
-			// else if (currRound == 2){
-			// 	score2+=5
-			// }
 			if (player == 3){
 				score3+=10
-				document.getElementById('score3').innerText=score3
 			}
-			// else if (currRound == 2){
-			// 	score3+=5
-			// }
 			if (player == 4){
 				score4+=10
-				document.getElementById('score4').innerText=score4
 			}
-			// else if (currRound == 2){
-			// 	score4+=5
-			// }
-			
 		}
 
 		else if (currRound == 2){ 
@@ -319,11 +229,6 @@ function selectAnswer(e, player){
 			score2+=5
 			score3+=5
 			score4+=5
-
-			document.getElementById('score1').innerText=score1
-			document.getElementById('score2').innerText=score2
-			document.getElementById('score3').innerText=score3
-			document.getElementById('score4').innerText=score4
 		}
 
 			if (currPlayer == 1){
@@ -346,77 +251,64 @@ function selectAnswer(e, player){
 		correctPrevSelected = false
 		if (currRound == 1){
 			if (player == 1){
-				if (currRound == 1){ //reset round to 1 after round 2
+				if (currRound == 1){ 
 					score1-=10
 				}
 				else if (currRound == 2){
 					score1-=5
 				}
-				//score1-=10
-				console.log(currRound)
-				document.getElementById('score1').innerText=score1
 			}
 			if (player == 2){
-				if (currRound == 1){ //reset round to 1 after round 2
+				if (currRound == 1){ 
 					score2-=10
 				}
 				else if (currRound == 2){
 					score2-=5
 				}
-				// score2-=10
-				document.getElementById('score2').innerText=score2
 			}
 			if (player == 3){
-				if (currRound == 1){ //reset round to 1 after round 2
+				if (currRound == 1){ 
 					score3-=10
 				}
 				else if (currRound == 2){
 					score3-=5
 				} 
-				// score3-=10
-				document.getElementById('score3').innerText=score3
-				//not everyone agreed adds too many points
 			}
 			if (player == 4){
-				if (currRound == 1){ //reset round to 1 after round 2
+				if (currRound == 1){ 
 					score4-=10
 				}
 				else if (currRound == 2){
 					score4-=5
 				}
-				// score4-=10
-				document.getElementById('score4').innerText=score4
 			}
-		}
+	}
 
-		// }
-		else{
-			score1-=5
-			score2-=5
-			score3-=5
-			score4-=5
-
-			document.getElementById('score1').innerText=score1
-			document.getElementById('score2').innerText=score2
-			document.getElementById('score3').innerText=score3
-			document.getElementById('score4').innerText=score4
-		}
-			if (currPlayer==1){
-				p1correct = false
-			}
-			if (currPlayer==2){
-				p2correct = false
-			}
-			if (currPlayer==3){
-				p3correct = false
-			}
-			if (currPlayer==4){
-				p4correct = false
-			}
-
-		// }
+	else if (currRound == 2){
+		score1-=5
+		score2-=5
+		score3-=5
+		score4-=5
+	}
+	if (currPlayer==1){
+		p1correct = false
+	}
+	if (currPlayer==2){
+		p2correct = false
+	}
+	if (currPlayer==3){
+		p3correct = false
+	}
+	if (currPlayer==4){
+		p4correct = false
+	}
 
 	}
+
+	document.getElementById('score1').innerText=score1
+	document.getElementById('score2').innerText=score2
+	document.getElementById('score3').innerText=score3
+	document.getElementById('score4').innerText=score4
 }
 	
 
@@ -434,7 +326,7 @@ function clearStatusClass(element){
 	element.classList.remove('false')
 }
 
-const questions = [ //pull from practice test //separate file?
+const questions = [ 
 	{
 		question: "What's the runtime of binary sort?",
 		answers: [
@@ -456,12 +348,12 @@ const questions = [ //pull from practice test //separate file?
 	},
 
 	{
-		question: "who is the prime minister of here?",
+		question: "Why would you ever want to use a singly linked list over a doubly linked list??",
 		answers: [
-			{text: 'there', correct: true},
-			{text: 'nope', correct: false}, //seem like reset state isn't working...
-			{text: 'uhm', correct: false},
-			{text: 'ayyyno', correct: false}
+			{text: 'Doubly linked lists are always better', correct: false},
+			{text: 'When you are heavily constrained for memory', correct: true}, //seem like reset state isn't working...
+			{text: 'When you only need to access one end of the list', correct: false},
+			{text: 'Faster look-up times', correct: false}
 		],
 	},
 
