@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Crimson+Text:ital,wght@1,600&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="styles/main.css" type="text/css">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game</title>
 
+  <title>CS Study Game</title>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="game.html">Game</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="directions.html">Directions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="feedback.html">Feedback</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<h1>CS Study Game</h1>
 </head>    
 <body>
   <div class="container">
-
     <div id="start"> 
-<!--       add class=hide? -->
+<!--       add class=d-none? -->
     <label for="namesContainer">Enter your names:</label>
     <div id="namesContainer">
       <textarea id="name1" name="name1" rows="1" cols="10"></textarea>
@@ -24,8 +45,7 @@
     </div>
     </div>
 
-    <div id="question-container" class="hide"> 
-      <div id="namesDisplay">
+    <div id="namesDisplay" class="d-none">
         <p id="nameD1" class="name">Name1</p>
         <p id="score1" class="score">0</p>
 
@@ -38,11 +58,15 @@
         <p id="nameD4" class="name">Name4</p>
         <p id="score4" class="score">0</p>
       </div>
-      <p id="round2" class="hide">Not everyone agreed! Try coming to a consensus.</p>
-      <p id="currName" class="hide">Player's Turn</p>
 
+        <p id="round2feedback" class="d-none"> That is correct!</p>
+    <div id="question-container" class="d-none"> 
+      
+      <p id="round2" class="d-none">Not everyone agreed! Try coming to a consensus.</p>
+      <p id="currName" class="d-none">Player's Turn</p>
 
       <div id="question" class="question">  
+
 
      </div> 
           <button id= "ans1" class="btn notselected" onclick="selectAnswer(ans1, 1)"> Answer 1 </button>
@@ -52,10 +76,10 @@
     </div>
     <div class="controls">
       <button id="start-btn" class="start-btn btn">Start</button> 
-      <button id="next-round-btn" class="next-round-btn btn hide" onclick="setNextRound()">Try Again</button> 
-      <button id="next-player-btn" class="next-player-btn btn hide" onclick="changePlayer()">Next Turn</button> <!-- changeplayer only if round ==1 -->
-      <button id="next-btn" class="next-btn btn hide">Next</button> 
-     <!--  change to radio buttons? -->
+      <button id="next-round-btn" class="next-round-btn btn d-none" onclick="setNextRound()">Try Again</button> 
+      <button id="next-player-btn" class="next-player-btn btn d-none" onclick="changePlayer()">Next Turn</button> 
+      <button id="next-btn" class="next-btn btn d-none">Next</button> 
+      <button id="feedback-btn" class="feedback-btn btn d-none" onclick="showFeedback()">Show Feedback</button> 
     </div>
     <div class="score">
       

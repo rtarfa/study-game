@@ -1,18 +1,11 @@
-/*
-TODO: Reset round to round 1 after revealing answer
-reset button fill up whole screen at end (has probs)
-remove scoring; only show at end of 1st round if everyone right, end of 2nd round (That's correct - w explanation OR That's wrong - w correct answer and explanation)
-also figure out scoring/penalties
-before restarting, show final scores
-instead of new page for game, just make start button disappear?
-*/
-
-
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
 const nextPlayerButton = document.getElementById('next-player-btn')
+const feedbackButton = document.getElementById('feedback-btn')
+
 const questionContainerElement = document.getElementById('question-container')
 const namesContainerElement = document.getElementById('start')
+const scoreDisplay = document.getElementById('namesDisplay')
 const questionElement = document.getElementById('question')
 const ans1Element = document.getElementById('ans1')
 const ans2Element = document.getElementById('ans2')
@@ -20,6 +13,8 @@ const ans3Element = document.getElementById('ans3')
 const ans4Element = document.getElementById('ans4')
 const playersTurnElement = document.getElementById('currName')
 const round2Element = document.getElementById('round2')
+const round2Feedback = document.getElementById('round2feedback')
+
 
 let shuffledQuestions, correctQuestionIndex;
 let score1, score2, score3, score4 = 0;
@@ -46,31 +41,31 @@ function restartSelection(){
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () =>{
-	if ((!p1correct || !p2correct || !p3correct || !p4correct) && currRound==1){
+	if ((!p1correct || !p2correct || !p3correct || !p4correct) && currRound == 1){
+		console.log("here")
 		setNextRound()
 		restartSelection()
 	}
 	else{
-		if (currRound==2){
-			round2Element.classList.add('hide')
+		if (currRound == 2){
+			// round2Element.classList.add('d-none')
+			removeFeedback()
 		 	currRound = 1
 		}
-		playersTurnElement.classList.remove('hide')
+		playersTurnElement.classList.remove('d-none')
 		correctQuestionIndex++
 		if (correctQuestionIndex > (questions.length-1)){
 			startButton.innerText = "Restart"
-			startButton.classList.remove('hide')
+			startButton.classList.remove('d-none')
 			startButton.addEventListener('click', restartGame)
-			nextButton.classList.add('hide')
+			nextButton.classList.add('d-none')
 		} 
 		else {
 			setnextQuestion()
 			restartSelection()
 			currPlayer = 1
 		}	
-
 	}
-	
 })
 
 function restartGame(){
@@ -79,8 +74,11 @@ function restartGame(){
 
 function setNextRound(){
 	correctPrevSelected = false
-	round2Element.classList.remove('hide')
-	playersTurnElement.classList.add('hide')
+	round2Element.classList.remove('d-none')
+	round2Feedback.classList.add('d-none')
+	playersTurnElement.classList.add('d-none')
+	feedbackButton.classList.remove('d-none')
+	nextButton.classList.add('d-none')
 	currRound++
 	currPlayer = 1
 	p1correct = false
@@ -103,12 +101,12 @@ function updateNames(){
 
 function startGame(){
 	updateNames()
-	namesContainerElement.classList.add('hide')
-	startButton.classList.add('hide')
-	nextPlayerButton.classList.remove('hide')
+	namesContainerElement.classList.add('d-none')
+	startButton.classList.add('d-none')
+	nextPlayerButton.classList.remove('d-none')
 	shuffledQuestions=questions.sort(() => Math.random() - 0.5)
 	correctQuestionIndex=0;
-	questionContainerElement.classList.remove('hide') 
+	questionContainerElement.classList.remove('d-none') 
 	setnextQuestion()
 
 	score1 = 0 
@@ -118,18 +116,50 @@ function startGame(){
 	currPlayer = 1
 	currRound = 1
 
-	playersTurnElement.classList.remove("hide")
+	playersTurnElement.classList.remove("d-none")
 	playersTurnElement.innerText = document.getElementById('name1').value + "'s Turn"
 	
 }
 
+function showFeedback(){
+	namesDisplay.classList.remove('d-none')
+	questionContainerElement.classList.add('d-none')
+	round2Element.classList.add('d-none')
+
+ 	if (p1correct){
+ 		round2Feedback.innerText = "That was correct!"
+ 	}
+ 	else{
+ 		round2Feedback.innerText = `That was incorrect. The correct answer is ${questions[correctQuestionIndex].correctAnswer} because ${questions[correctQuestionIndex].explanation}`
+ 	}
+
+ 	round2Feedback.classList.remove("d-none")
+ 	nextButton.classList.remove('d-none')
+ 	feedbackButton.classList.add('d-none')
+}
+
+function removeFeedback (){
+	namesDisplay.classList.add('d-none')
+	questionContainerElement.classList.remove('d-none')
+	round2Feedback.classList.add('d-none')
+}
+
+
 function changePlayer(){
-		playersTurnElement.classList.remove("hide")
+		playersTurnElement.classList.remove("d-none")
 		correctPrevSelected = false
 		if (currPlayer == 3){
-			nextButton.classList.remove('hide')
-			nextPlayerButton.classList.add('hide')
+			nextButton.classList.remove('d-none')
+			nextPlayerButton.classList.add('d-none')
 			currPlayer++;
+
+			// if (currRound == 2){
+// 				feedbackButton.classList.remove('d-none')
+// 				nextPlayerButton.classList.add('d-none')
+// 				currPlayer++; 
+// 				// get rid of this line?
+// 			}
+
 		}
 		else{
 			currPlayer++
@@ -156,9 +186,9 @@ function changePlayer(){
 
 function setnextQuestion(){
 	resetState(); //is this even working
-	showQuestion(shuffledQuestions[correctQuestionIndex]);
-	nextButton.classList.add('hide')
-	nextPlayerButton.classList.remove('hide')
+	showQuestion(shuffledQuestions[correctQuestionIndex])
+	nextButton.classList.add('d-none')
+	nextPlayerButton.classList.remove('d-none')
 	currRound = 1
 }
 
@@ -328,13 +358,15 @@ function clearStatusClass(element){
 
 const questions = [ 
 	{
-		question: "What's the runtime of binary sort?",
+		question: "What's the runtime of binary search?",
 		answers: [
 			{text: '2O(n)', correct: false},
 			{text: 'O(n)', correct: false},
 			{text: 'O(log n)', correct: true},
 			{text: 'O(n)^2', correct: false}	
 		],
+		correctAnswer: '\"O(log n)\"',
+		explanation: "divides list of items to search thru in half every time"
 	},
 
 	{
@@ -345,6 +377,8 @@ const questions = [
 			{text: '4', correct: false},
 			{text: 'None of the above', correct: false}
 		],
+		correctAnswer: '\"3\"',
+		explanation: "it's tall"
 	},
 
 	{
@@ -355,6 +389,8 @@ const questions = [
 			{text: 'When you only need to access one end of the list', correct: false},
 			{text: 'Faster look-up times', correct: false}
 		],
+		correctAnswer: '\"when you are heavily constrained for memory\"',
+		explanation: "it takes up less space"
 	},
 
 ]
