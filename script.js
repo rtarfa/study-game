@@ -14,7 +14,7 @@ const ans4Element = document.getElementById('ans4')
 const playersTurnElement = document.getElementById('currName')
 const round2Element = document.getElementById('round2')
 const round2Feedback = document.getElementById('round2feedback')
-
+const gameEndElement = document.getElementById('gameEnd')
 
 let shuffledQuestions, correctQuestionIndex;
 let score1, score2, score3, score4 = 0;
@@ -42,7 +42,6 @@ function restartSelection(){
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () =>{
 	if ((!p1correct || !p2correct || !p3correct || !p4correct) && currRound == 1){
-		console.log("here")
 		setNextRound()
 		restartSelection()
 	}
@@ -54,7 +53,11 @@ nextButton.addEventListener('click', () =>{
 		}
 		playersTurnElement.classList.remove('d-none')
 		correctQuestionIndex++
+		// console.log(correctQuestionIndex)
 		if (correctQuestionIndex > (questions.length-1)){
+			questionContainerElement.classList.add("d-none")
+			namesDisplay.classList.remove('d-none')
+			gameEndElement.classList.remove("d-none")
 			startButton.innerText = "Restart"
 			startButton.classList.remove('d-none')
 			startButton.addEventListener('click', restartGame)
