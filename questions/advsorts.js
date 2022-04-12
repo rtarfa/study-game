@@ -2,16 +2,16 @@
 
 const questions = [ 
 	{
-		question: "Choose the sorting algorithm with the fastest worst case runtime:",
+		question: "Choose the sorting algorithm with the fastest (best) worst case runtime:",
 		num: 1,
 		image: null,
 		answers: [
 			{text: 'Quicksort', correct: false},
 			{text: 'Insertion sort', correct: false},
 			{text: 'Bubblesort', correct: false},
-			{text: 'None of these', correct: true},
+			{text: 'They all have the same worst-case', correct: true},
 		],
-		correctAnswer: '\"None of these\"',
+		correctAnswer: '\"They all have the same worst-case\"',
 		explanation: "from this list, every algorithm has a worst case runtime of O(n^2)."
 	}, 
 
@@ -35,12 +35,12 @@ const questions = [
 		image: null,
 		answers: [
 			{text: 'Yes, insertion sort is always faster than mergesort', correct: false},
-			{text: 'Yes, but only for small input sizes', correct: true},
+			{text: 'Yes, but only in some situations', correct: true},
 			{text: 'No, since insertion sort\'s worst case runtime is O(n^2)', correct: false},
 			{text: 'No, since mergesort has a faster runtime', correct: false},
 		],
-		correctAnswer: '\"Yes, but only for small input sizes\"',
-		explanation: "while insertion sort's worst case runtime is O(n^2), with smaller input sizes, it tends to run faster" //add more to this
+		correctAnswer: '\"Yes, but only in some situations\"',
+		explanation: "while insertion sort's worst case runtime is O(n^2), with smaller input sizes or almost sorted lists, it tends to run faster" //add more to this
 	},
 
 	{
@@ -58,17 +58,17 @@ const questions = [
 	},
 
 	{
-		question: "What is the average runtime of divide and conquer algorithms?", //not sure if this question can be used/is phrased correctly
+		question: "Which of the following best explains why Mergesort has a runtime of O(n log n)?", //I'll rewrite it (-Flo)
 		num: 5,
 		image: null,
 		answers: [
-			{text: 'O(n)', correct: false},
-			{text: 'O(n log n)', correct: true},
-			{text: 'O(1)', correct: false},
-			{text: 'O(n^2)', correct: false},
+			{text: 'Splitting a list in half and recursing on each half always leads to O(n log n) runtime', correct: false},
+			{text: 'The recursion Tree has height of log n and each layer of the tree involves O(n) work', correct: true},
+			{text: 'The recursion Tree has height n and each layer of the tree involves O(log n) work', correct: false},
+			{text: 'The recursion Tree has n total nodes in it, and at each node, we do O(log n) work', correct: false},
 		],
-		correctAnswer: '\"O(n log n)\"',
-		explanation: ""
+		correctAnswer: '\"The recursion Tree has height of log n and each layer of the tree involves O(n) work\"',
+		explanation: "The work, is in the linear time merge() step. Each layer of the recursion tree has every element in the original list exactly once for a total of O(n) work."
 	},
 
 	{ //redo
