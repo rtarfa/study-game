@@ -9,7 +9,7 @@ const questions = [
 			{text: '', correct: false}
 		],
 		correctAnswer: '\"False\"',
-		explanation: "While hash tables typically involve a fast look-up, they do take up memory space and ___"
+		explanation: "While hash tables typically involve a fast look-up, they do take up memory (an array) which is not all used."
 	}, 
 
 	{
@@ -22,24 +22,24 @@ const questions = [
 			{text: '', correct: false}
 		],
 		correctAnswer: '\"False\"',
-		explanation: "Needs to be fast for it to be fast"
+		explanation: "Needs to be fast for it to be fast, but collisions can slow it down while still working correctly."
 	}, 
 
 	{
 		question: "What are the best case and worst case runtimes for the insert() operation in a hashtable with separate chaining? You may assume that the hash table allows for duplicate values to be inserted. All answers should be tight bounds.",
 		image: null,
 		answers: [
-			{text: 'Best: O(n); Worst: O(n2)', correct: false},
+			{text: 'Best: O(n); Worst: O(n^2)', correct: false},
 			{text: 'Best: O(1); Worst: O(n)', correct: false},
 			{text: 'Best: O(n); Worst: O(n)', correct: false},
 			{text: 'Best: O(1); Worst: O(1)', correct: true}
 		],
 		correctAnswer: '\"Best: O(1); Worst: O(1)\"',
-		explanation: "You may assume the hashtable allows for duplicate values; bc can assume, you can insert at the head of the linked list in constant time"
+		explanation: "You may assume the hashtable allows for duplicate values; becuase of this, you can insert at the head of the linked list in constant time"
 	}, 
 
 	{
-		question: "Which of these changes to a hashtable implementation would not speed up and is most likely to actually slow down the runtime?",
+		question: "Which of these changes to a hashtable implementation would not speed it up and is most likely to actually slow down the runtime?",
 		image: null,
 		answers: [
 			{text: 'Making the array bigger', correct: false},
@@ -47,7 +47,7 @@ const questions = [
 			{text: 'Changing your hash function to compute the hash faster but return smaller values', correct: true},
 			{text: 'Switching your secondary data structure to a red black tree', correct: false}
 		],
-		correctAnswer: '\"Changing your hash function to compute the hash faster but return smaller values\"',
+		correctAnswer: '\"Changing your hash function to compute the hash faster but return smaller values. Smaller range of values means more collisions.\"',
 		explanation: "---"
 	}, 
 	///not actually sure what the correct answer is
@@ -56,25 +56,25 @@ const questions = [
 		image: "images/collisionres.png",
 		answers: [
 			{text: '68', correct: false},
-			{text: '-', correct: true},
+			{text: '- (empty)', correct: true},
 			{text: '25', correct: false},
 			{text: '31', correct: false}
 		],
 		correctAnswer: '\"-\"',
-		explanation: "---"
+		explanation: "Index 7 will remain empty"
 	}, 
 
 	{
-		question: "Which of the following is not a good technique to avoid collisions?",
+		question: "Which of the following is the least recommended technique to improve hash table performance (even if it is effective, it has at least one major drawback)?",
 		image: null,
 		answers: [
-			{text: 'Making the hash function appear random', correct: false}, //not 100% sure what this is referring to (pulled this one from a site)
-			{text: 'Use the chaining method', correct: false},
-			{text: 'Use uniform hashing', correct: false},
-			{text: 'Increasing the hash table size', correct: true}
+			{text: 'Making the hash function generally return larger values that overflow', correct: false}, //not 100% sure what this is referring to (pulled this one from a site)
+			{text: 'Using the separate chaining method', correct: false},
+			{text: 'Using uniform hashing (i.e., making hash function spread the keys out better)', correct: false},
+			{text: 'Increasing the hash table size to a large value', correct: true}
 		],
 		correctAnswer: '\"increasing the hash table size\"',
-		explanation: "when increasing the hash table size, the space complexity will increase as we need to reallocate the memory size of hash table for every collision. Therefore it's not the best technique to avoid collisions. Instead, we can avoid collisions by making the hash function random, use chaining methods and uniform hashing."
+		explanation: "when increasing the hash table size, the space complexity will increase as we need to reallocate the memory size of hash table for every collision. Therefore it's not the best technique to avoid collisions. Instead, we can avoid collisions by making the hash function better, using the chaining methods and uniform hashing."
 	}, 
 
 	//
@@ -83,17 +83,17 @@ const questions = [
 		question: "What data structure is most appropriate for simple chaining?",
 		image: null,
 		answers: [
-			{text: 'Singly linked list', correct: false},
-			{text: 'Doubly linked list', correct: true},
+			{text: 'Singly linked list', correct: true},
+			{text: 'Doubly linked list', correct: false},
 			{text: 'Circular linked list', correct: false},
 			{text: 'Binary tree', correct: false}
 		],
-		correctAnswer: '\"doubly linked lsit\"',
-		explanation: "deletion becomes easier with a doubly linked list"
+		correctAnswer: '\"Singly linked lsit\"',
+		explanation: "Singly linked list saves space, but still has constant time insert at head."
 	}, 
 
 	{
-		question: "What is the search complexity in direct addressing?", //not sure if this is covered in lecture
+		question: "What is the worst-case complexity of find() when using double-hashing?", //not sure if this is covered in lecture
 		image: null,
 		answers: [
 			{text: 'O(n)', correct: false},
@@ -101,8 +101,8 @@ const questions = [
 			{text: 'O(log n)', correct: false},
 			{text: 'O(1)', correct: true}
 		],
-		correctAnswer: '\"O(1)\"',
-		explanation: "direct address tables use arrays which are random access data structure, so, the key values (which are also the index of the array) can be easily used to search the records in constant time."
+		correctAnswer: '\"O(n)\"',
+		explanation: "It is still possible that collisions force you to probe through all n items already present in the table before finding an available slot"
 	}, 
 
 ]
