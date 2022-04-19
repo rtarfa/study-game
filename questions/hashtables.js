@@ -47,8 +47,8 @@ const questions = [
 			{text: 'Changing your hash function to compute the hash faster but return smaller values', correct: true},
 			{text: 'Switching your secondary data structure to a red black tree', correct: false}
 		],
-		correctAnswer: '\"Changing your hash function to compute the hash faster but return smaller values. Smaller range of values means more collisions.\"',
-		explanation: "---"
+		correctAnswer: '\"changing your hash function to compute the hash faster but return smaller values.\"',
+		explanation: "a smaller range of values means more collisions."
 	}, 
 	///not actually sure what the correct answer is
 	{
@@ -56,28 +56,27 @@ const questions = [
 		image: "images/collisionres.png",
 		answers: [
 			{text: '68', correct: false},
-			{text: '- (empty)', correct: true},
 			{text: '25', correct: false},
-			{text: '31', correct: false}
+			{text: '31', correct: false},
+			{text: 'None (empty)', correct: true}
+
 		],
-		correctAnswer: '\"-\"',
-		explanation: "Index 7 will remain empty"
+		correctAnswer: '\" none (empty)\"',
+		explanation: "index 7 will remain empty"
 	}, 
 
 	{
 		question: "Which of the following is the least recommended technique to improve hash table performance (even if it is effective, it has at least one major drawback)?",
 		image: null,
 		answers: [
-			{text: 'Making the hash function generally return larger values that overflow', correct: false}, //not 100% sure what this is referring to (pulled this one from a site)
+			{text: 'Making the hash function generally return larger values that overflow', correct: false}, 
 			{text: 'Using the separate chaining method', correct: false},
 			{text: 'Using uniform hashing (i.e., making hash function spread the keys out better)', correct: false},
 			{text: 'Increasing the hash table size to a large value', correct: true}
 		],
-		correctAnswer: '\"increasing the hash table size\"',
+		correctAnswer: '\"increasing the hash table size to a large value\"',
 		explanation: "when increasing the hash table size, the space complexity will increase as we need to reallocate the memory size of hash table for every collision. Therefore it's not the best technique to avoid collisions. Instead, we can avoid collisions by making the hash function better, using the chaining methods and uniform hashing."
 	}, 
-
-	//
 
 	{
 		question: "What data structure is most appropriate for simple chaining?",
@@ -89,11 +88,11 @@ const questions = [
 			{text: 'Binary tree', correct: false}
 		],
 		correctAnswer: '\"Singly linked lsit\"',
-		explanation: "Singly linked list saves space, but still has constant time insert at head."
+		explanation: "singly linked list saves space, but still has constant time insert at head."
 	}, 
 
 	{
-		question: "What is the worst-case complexity of find() when using double-hashing?", //not sure if this is covered in lecture
+		question: "What is the worst-case complexity of find() when using double-hashing?",
 		image: null,
 		answers: [
 			{text: 'O(n)', correct: false},
