@@ -72,7 +72,8 @@ nextButton.addEventListener('click', () =>{
 		else {
 			setnextQuestion()
 			restartSelection()
-			currPlayer = 1
+			currPlayer = 1 
+			playersTurnElement.innerText = document.getElementById('name1').value + "'s Turn"
 		}	
 	}
 })
@@ -173,6 +174,9 @@ function changePlayer(){
 			currPlayer++
 		}
 
+		if (currPlayer == 1){
+			playersTurnElement.innerText = document.getElementById('name1').value + "'s Turn"
+		}
 		if (currPlayer == 2){
 			playersTurnElement.innerText = document.getElementById('name2').value + "'s Turn"
 		}
@@ -294,10 +298,9 @@ function selectAnswer(e, player){
 				
 	}
 			
-	if (!correct && correctPrevSelected){
+	if (!correct && correctPrevSelected){ //lets's not do negative points for round 1 //bugfix
 		correctPrevSelected = false
-		if (currRound == 1){
-			if (player == 1){
+		if (player == 1){
 				if (currRound == 1){ 
 					score1-=10
 				}
@@ -329,7 +332,6 @@ function selectAnswer(e, player){
 					score4-=5
 				}
 			}
-	}
 
 	else if (currRound == 2){
 		score1-=5
