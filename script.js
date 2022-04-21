@@ -201,6 +201,10 @@ function setnextQuestion(){
 	showQuestion(shuffledQuestions[correctQuestionIndex])
 	nextButton.classList.add('d-none')
 	nextPlayerButton.classList.remove('d-none')
+	p1correct = false
+	p2correct = false
+	p3correct = false
+	p4correct = false
 	currRound = 1
 }
 
