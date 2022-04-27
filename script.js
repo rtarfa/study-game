@@ -477,10 +477,10 @@ const questions = [
 		question: "What is the worst-case complexity of find() when using double-hashing?",
 		image: null,
 		answers: [
-			{text: 'O(n)', correct: false},
+			{text: 'O(n)', correct: true},
 			{text: 'O(n log n)', correct: false},
 			{text: 'O(log n)', correct: false},
-			{text: 'O(1)', correct: true}
+			{text: 'O(1)', correct: false}
 		],
 		correctAnswer: '\"O(n)\"',
 		explanation: "It is still possible that collisions force you to probe through all n items already present in the table before finding an available slot"
