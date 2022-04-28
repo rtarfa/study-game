@@ -41,7 +41,7 @@ const questions = [
 	},
 
 	{
-		question: "Fill in the blank: For every non-root node X, the key in the parent of X is ____ the key in X. Thus, the tree is partially ordered.",
+		question: "Fill in the blank: For every non-root node X in a min-heap, the key in the parent of X is ____ the key in X. Thus, the tree is partially ordered.",
 		image: null,
 		answers: [
 			{text: '<', correct: false},
